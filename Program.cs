@@ -1,9 +1,11 @@
 ﻿var array = Console.ReadLine()!.Split().Select(int.Parse).ToArray();
 BubbleSort(ref array);
 foreach (var item in array)
-{
     Console.Write(item + " ");
-}
+Console.WriteLine("\nInsert target for search in array");
+var target = int.Parse(Console.ReadLine()!);
+var index = MyBinarySearch(array, target);
+Console.WriteLine(index == -1 ? "There is no element in array" : $"index of the element is {index}");
 return;
 
 void BubbleSort(ref int[] arr)
@@ -23,4 +25,22 @@ void BubbleSort(ref int[] arr)
                 return;
         }
     }
+}
+
+int MyBinarySearch(int[] arr, int target)
+{
+    var left = 0;
+    var right = arr.Length;
+    while (left <= right)
+    {
+        var mid = (left + right) / 2;
+        if (target < arr[mid])
+            right = mid - 1;
+        else if (target > arr[mid])
+            left = mid + 1;
+        else
+            return mid;
+    }
+
+    return -1;
 }
