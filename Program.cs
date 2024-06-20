@@ -39,7 +39,11 @@ int MyBinarySearch(int[] arr, int target)
         else if (target > arr[mid])
             left = mid + 1;
         else
-            return mid;
+        {
+            while (mid >= 0 && arr[mid] == target)
+                mid--;
+            return mid + 1;
+        }
     }
 
     return -1;
