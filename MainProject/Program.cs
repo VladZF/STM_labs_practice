@@ -1,7 +1,23 @@
 ﻿using src;
 
 Console.WriteLine("Insert array: ");
-var array = Console.ReadLine()!.Split().Select(int.Parse).ToArray();
+int[] array;
+try
+{
+    var arrayString = Console.ReadLine();
+    if (string.IsNullOrEmpty(arrayString))
+    {
+        Console.WriteLine("Error: Input is empty");
+        return;
+    }
+    array = arrayString.Split().Select(int.Parse).ToArray();
+}
+catch (FormatException e)
+{
+    Console.WriteLine($"Error: {e.Message}");
+    return;
+}
+
 Console.WriteLine("Sorted array: ");
 Functions.BubbleSort(ref array);
 foreach (var item in array)
