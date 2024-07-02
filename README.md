@@ -1,1 +1,1 @@
-# Git test for STM
+# STM Labs repository for practices
