@@ -12,16 +12,17 @@ public static class Solution
         var counter = 0;
         if (sequence[^1] == '0')
             throw new ArgumentException("Impossible to compress sequence");
-        foreach (var c in sequence)
+        foreach (var currentChar in sequence)
         {
-            if (c != '0' && c != '1')
+            if (currentChar != '0' && currentChar != '1')
             {
                 throw new FormatException("Sequence is not binary");
             }
-            if (c == '1')
+            if (currentChar == '1')
             {
                 answer.Append((char)('a' + counter));
-                counter = -1;
+                counter = 0;
+                continue;
             }
 
             counter++;
