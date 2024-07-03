@@ -7,13 +7,13 @@ class Program
     static void IsTriangleExistsConsole()
     {
         var englishCulture = CultureInfo.GetCultureInfo("en-US");
-        double a = 0.0, b = 0.0;
+        double firstAngle = 0.0, secondAngle = 0.0;
         try
         {
             Console.Write("Insert angle A: ");
-            a = double.Parse(Console.ReadLine()!, englishCulture);
+            firstAngle = double.Parse(Console.ReadLine()!, englishCulture);
             Console.Write("Insert angle B: ");
-            b = double.Parse(Console.ReadLine()!, englishCulture);
+            secondAngle = double.Parse(Console.ReadLine()!, englishCulture);
         }
         catch (FormatException e)
         {
@@ -30,11 +30,11 @@ class Program
             return;
         }
 
-        var item = Solution.IsTriangleExists(a, b);
-        if (item.Item1)
+        var triangleFactors = AlgorithmsFunctions.IsTriangleExists(firstAngle, secondAngle);
+        if (triangleFactors.isExists)
         {
             Console.WriteLine("Triangle exists");
-            Console.WriteLine(item.Item2 ? "Triangle is right-angled" : "Triangle is not right-angled");
+            Console.WriteLine(triangleFactors.isRightAngled ? "Triangle is right-angled" : "Triangle is not right-angled");
         } 
         else
         {
