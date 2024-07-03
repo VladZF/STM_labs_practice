@@ -8,7 +8,7 @@ class Program
         try
         {
             var sequence = Console.ReadLine()!;
-            var compressed = Solution.CompressBinarySequence(sequence);
+            var compressed = AlgorithmsFunctions.CompressBinarySequence(sequence);
             Console.WriteLine($"Compressed sequence: {compressed}");
         }
         catch (Exception e)

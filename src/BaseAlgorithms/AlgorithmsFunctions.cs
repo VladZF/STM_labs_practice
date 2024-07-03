@@ -2,7 +2,7 @@
 
 namespace BaseAlgorithms;
 
-public static class Solution
+public static class AlgorithmsFunctions
 {
     public static string CompressBinarySequence(string sequence)
     {
