@@ -43,4 +43,24 @@ public static class AlgorithmsFunctions
 
         return (true, false);
     }
+
+    public static (HashSet<string> everywhere, HashSet<string> nowhere) ToysInKinderGardens(HashSet<string> toys,
+        List<HashSet<string>> gardens)
+    {
+        HashSet<string> everywhere = [];
+        HashSet<string> nowhere = [];
+        foreach (var toy in toys)
+        {
+            var counter = gardens.Count(garden => garden.Contains(toy));
+            if (counter == gardens.Count)
+            {
+                everywhere.Add(toy);
+            } 
+            else if (counter == 0)
+            {
+                nowhere.Add(toy);
+            }
+        }
+        return (everywhere, nowhere);
+    }
 }

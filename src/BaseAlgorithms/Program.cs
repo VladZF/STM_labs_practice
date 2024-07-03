@@ -57,6 +57,69 @@ class Program
         }
     }
     
+    static void ToysInKinderGardensConsole()
+    {
+        List<HashSet<string>> gardens = [];
+        HashSet<string> toys = [];
+        try
+        {
+            Console.Write("Insert gardens count: ");
+            var gardensCount = int.Parse(Console.ReadLine() ?? string.Empty);
+            for (var counter = 0; counter < gardensCount; ++counter)
+            {
+                gardens.Add([]);
+            }
+            Console.Write("Insert number of toys: ");
+            var toysCount = int.Parse(Console.ReadLine() ?? string.Empty);
+            Console.WriteLine("Insert toys list in format <toy name> <gardens' numbers in interval [0..gardensCount)>:");
+            for (var counter = 0; counter < toysCount; ++counter)
+            {
+                var data = Console.ReadLine()!.Split();
+                if (data.Length == 0 || data[0].Length == 0)
+                {
+                    Console.WriteLine("Error: Empty toy name");
+                    return;
+                }
+
+                var toy = data[0];
+                var gardenNumbers = data[1..].Select(int.Parse).ToArray();
+                toys.Add(toy);
+                foreach (var number in gardenNumbers)
+                {
+                    if (number >= gardensCount)
+                    {
+                        Console.WriteLine($"Error: there is no garden with number {number}");
+                        return;
+                    }
+                    gardens[number].Add(toy);
+                }
+            }
+
+            var statistics = AlgorithmsFunctions.ToysInKinderGardens(toys, gardens);
+            Console.WriteLine("All gardens contain these toys:");
+            if (statistics.everywhere.Count == 0)
+            {
+                Console.WriteLine('-');
+            }
+            foreach (var toy in statistics.everywhere)
+            {
+                Console.WriteLine(toy);
+            }
+            Console.WriteLine("All gardens does not contain these toys:");
+            if (statistics.nowhere.Count == 0)
+            {
+                Console.WriteLine('-');
+            }
+            foreach (var toy in statistics.nowhere)
+            {
+                Console.WriteLine(toy);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error: {e.Message}");
+        }
+    }
     static void Main(string[] args)
     {
         Console.Write("1 - Task 1\n" +
@@ -74,6 +137,9 @@ class Program
                 break;
             case 3:
                 CompressBinarySequenceConsole();
+                break;
+            case 4:
+                ToysInKinderGardensConsole();
                 break;
             default:
                 Console.WriteLine("Incorrect operation");
