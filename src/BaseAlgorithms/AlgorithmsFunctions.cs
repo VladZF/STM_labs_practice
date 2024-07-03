@@ -43,4 +43,21 @@ public static class AlgorithmsFunctions
 
         return (true, false);
     }
+    
+    public static string GetWeekDay(int number)
+    {
+        int[] daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        var monthNames = System.Globalization.CultureInfo.GetCultureInfo("en-US").DateTimeFormat.MonthNames;
+        const int year = 2007;
+        var month = 1;
+        var dayCounter = 0;
+        while (dayCounter + daysInMonth[month] < number)
+        {
+            dayCounter += daysInMonth[month-1];
+            month++;
+        }
+
+        var date = month == 1 ? new DateOnly(year, month, number) : new DateOnly(year, month, number - dayCounter);
+        return $"{monthNames[date.Month-1]} {date.Day}, {date.DayOfWeek.ToString()}";
+    }
 }
