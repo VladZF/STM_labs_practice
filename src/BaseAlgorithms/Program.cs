@@ -7,19 +7,17 @@ class Program
     static void WallAndStickConsole()
     {
         var englishCulture = CultureInfo.GetCultureInfo("en-US");
-        double length = 0, distance = 0, step = 0;
+        double length = 0, step = 0;
         try
         {
-            Console.Write("Insert length of stick: ");
+            Console.Write("Insert length of stick (in meters): ");
             length = double.Parse(Console.ReadLine()!, englishCulture);
-            Console.Write("Insert distance between wall and bottom end of stick: ");
-            distance = double.Parse(Console.ReadLine()!, englishCulture);
-            Console.Write("Insert step of distance's change: ");
+            Console.Write("Insert step of distance's change (in meters): ");
             step = double.Parse(Console.ReadLine()!, englishCulture);
-            var answerList = Solution.WallAndStick(length, distance, step);
-            foreach (var angle in answerList)
+            var conditions = AlgorithmsFunctions.WallAndStick(length, step);
+            foreach (var condition in conditions)
             {
-                Console.WriteLine($"{double.Round(angle, 2)} ");
+                Console.WriteLine($"{double.Round(condition.distance, 2)} m. => {double.Round(condition.angle, 2)}°");
             }
 
         }
