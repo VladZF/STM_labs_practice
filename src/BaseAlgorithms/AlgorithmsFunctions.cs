@@ -4,7 +4,7 @@ public static class AlgorithmsFunctions
 {
     public static (bool isExists, bool isRightAngled) IsTriangleExists(double firstAngle, double secondAngle)
     {
-        if (0.0 <= firstAngle || firstAngle > 180.0 || 0.0 <= secondAngle || secondAngle > 180.0 || firstAngle + secondAngle >= 180.0)
+        if (firstAngle <= 0.0 || firstAngle > 180.0 || secondAngle <= 0.0 || secondAngle > 180.0 || firstAngle + secondAngle >= 180.0)
             return (false, false);
 
         var thirdAngle = 180.0 - firstAngle - secondAngle;
