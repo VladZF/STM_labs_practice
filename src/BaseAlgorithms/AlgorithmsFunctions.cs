@@ -43,4 +43,27 @@ public static class AlgorithmsFunctions
 
         return (true, false);
     }
+    
+    public static void HashTableLaunch()
+    {
+        var table = new HashTable(5);
+        table.Put("Cat", 10);
+        table.Put("dotnet", 12);
+        table.Print();
+        table.Put("Harry", 32);
+        table.Put("Jerry", 33);
+        table.Print();
+        table.Delete("Cat");
+        table.Print();
+        table.Get("dotnet");
+        table.Delete("Hello");
+        try
+        {
+            table.Get("Hello");
+        }
+        catch (ArgumentException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
 }

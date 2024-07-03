@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Globalization;
 
 namespace BaseAlgorithms;
@@ -74,6 +75,9 @@ class Program
                 break;
             case 3:
                 CompressBinarySequenceConsole();
+                break;
+            case 6:
+                AlgorithmsFunctions.HashTableLaunch();
                 break;
             default:
                 Console.WriteLine("Incorrect operation");
