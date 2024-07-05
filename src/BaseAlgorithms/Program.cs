@@ -59,65 +59,39 @@ class Program
     
     static void ToysInKinderGardensConsole()
     {
-        List<HashSet<string>> gardens = [];
-        HashSet<string> toys = [];
         try
         {
+            Console.WriteLine("Insert toys list (without spaces in names):");
+            var toysString = Console.ReadLine() ?? string.Empty;
+            if (toysString.Length == 0)
+            {
+                Console.WriteLine("No toys found");
+                return;
+            } 
+            var toysList = toysString.Split().ToHashSet();
+            var city = new City(toysList);
             Console.Write("Insert gardens count: ");
             var gardensCount = int.Parse(Console.ReadLine() ?? string.Empty);
-            for (var counter = 0; counter < gardensCount; ++counter)
-            {
-                gardens.Add([]);
-            }
-            Console.Write("Insert number of toys: ");
-            var toysCount = int.Parse(Console.ReadLine() ?? string.Empty);
-            Console.WriteLine("Insert toys list in format <toy name> <gardens' numbers in interval [0..gardensCount)>:");
-            for (var counter = 0; counter < toysCount; ++counter)
+            Console.WriteLine("Insert number of garden and all toys that contain in it in each row:");
+            for (var gardenCounter = 0; gardenCounter < gardensCount; gardenCounter++)
             {
                 var data = Console.ReadLine()!.Split();
-                if (data.Length == 0 || data[0].Length == 0)
-                {
-                    Console.WriteLine("Error: Empty toy name");
-                    return;
-                }
-
-                var toy = data[0];
-                var gardenNumbers = data[1..].Select(int.Parse).ToArray();
-                toys.Add(toy);
-                foreach (var number in gardenNumbers)
-                {
-                    if (number >= gardensCount)
-                    {
-                        Console.WriteLine($"Error: there is no garden with number {number}");
-                        return;
-                    }
-                    gardens[number].Add(toy);
-                }
+                var id = int.Parse(data[0]);
+                var toys = data[1..].ToHashSet();
+                var garden = new KinderGarden(id, toys);
+                city.AddGarden(garden);
             }
 
-            var statistics = AlgorithmsFunctions.ToysInKinderGardens(toys, gardens);
-            Console.WriteLine("All gardens contain these toys:");
-            if (statistics.everywhere.Count == 0)
+            var statuses = city.GetStatisticsAboutToys();
+            Console.WriteLine("Information about toys' placement in city:");
+            foreach (var toy in statuses)
             {
-                Console.WriteLine('-');
-            }
-            foreach (var toy in statistics.everywhere)
-            {
-                Console.WriteLine(toy);
-            }
-            Console.WriteLine("All gardens does not contain these toys:");
-            if (statistics.nowhere.Count == 0)
-            {
-                Console.WriteLine('-');
-            }
-            foreach (var toy in statistics.nowhere)
-            {
-                Console.WriteLine(toy);
-            }
+                Console.WriteLine($"Toy: {toy.name} | Status: {toy.status}");
+            }  
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Error: {e.Message}");
+            Console.WriteLine("Error: " + e.Message);
         }
     }
     static void Main(string[] args)
