@@ -58,6 +58,76 @@ class Program
         }
     }
     
+    public static void PutToHashTableByConsole(ref HashTable table)
+    {
+        Console.Write("Insert key: ");
+        var key = Console.ReadLine()!;
+        Console.Write("Insert value: ");
+        var value = int.Parse(Console.ReadLine()!);
+        table.Put(key, value);
+        Console.WriteLine($"Added key '{key}' with value {value}");
+    }
+    
+    public static void GetFromHashTableByConsole(ref HashTable table)
+    {
+        Console.Write("Insert key: ");
+        var key = Console.ReadLine()!;
+        var result = table.Get(key);
+        Console.WriteLine($"value by key '{key}' is {result}");
+    }
+    
+    public static void DeleteFromHashTableByConsole(ref HashTable table)
+    {
+        Console.Write("Insert key: ");
+        var key = Console.ReadLine()!;
+        table.Delete(key);
+        Console.WriteLine($"key '{key}' is deleted");
+    }
+    
+    public static void HashTableConsole()
+    {
+        var table = new HashTable();
+        Console.Write("1 - Put new key with value\n" +
+                      "2 - Get value by key\n" +
+                      "3 - Delete key with it's value\n" +
+                      "4 - Print table\n" +
+                      "5 - Exit from command line\n" +
+                      "Insert command: ");
+        var command = int.Parse(Console.ReadLine()!);
+        while (command != 5)
+        {
+            try
+            {
+                switch (command)
+                {
+                    case 1:
+                        PutToHashTableByConsole(ref table);
+                        break;
+                    case 2:
+                        GetFromHashTableByConsole(ref table);
+                        break;
+                    case 3:
+                        DeleteFromHashTableByConsole(ref table);
+                        break;
+                    case 4:
+                        Console.WriteLine(table);
+                        break;
+                    default:
+                        Console.WriteLine("Incorrect command");
+                        break;
+                } 
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e.Message);
+            }
+            
+
+            Console.Write("Insert command: ");
+            command = int.Parse(Console.ReadLine()!);
+        }
+    }
+    
     static void Main(string[] args)
     {
         Console.Write("1 - Task 1\n" +
@@ -77,7 +147,7 @@ class Program
                 CompressBinarySequenceConsole();
                 break;
             case 6:
-                AlgorithmsFunctions.HashTableLaunch();
+                HashTableConsole();
                 break;
             default:
                 Console.WriteLine("Incorrect operation");

@@ -1,4 +1,6 @@
-﻿namespace BaseAlgorithms;
+﻿using System.Text;
+
+namespace BaseAlgorithms;
 
 public class HashTable
 {
@@ -13,61 +15,75 @@ public class HashTable
         }
     }
     
+    public HashTable() : this(10)
+    {
+    }
+    
     public void Put(string key, int value)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(key);
+        if (string.IsNullOrWhiteSpace(key))
+        {
+            throw new ArgumentException("Key is empty or null");
+        }
         var index = Math.Abs(key.GetHashCode()) % _values.Length;
         for (var ptr = 0; ptr < _values[index].Count; ++ptr)
         {
             if (_values[index][ptr].key == key)
             {
                 _values[index][ptr] = (key, value);
-                Console.WriteLine($"ADD: Value with key '{key}' rewritten by value {value}");
                 return;
             }
         }
         _values[index].Add((key, value));
-        Console.WriteLine($"ADD: Added key '{key}' with value {value}");
     }
     
     public int Get(string key)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(key);
-        var index = Math.Abs(key.GetHashCode()) % _values.Length;
-        foreach (var item in _values[index].Where(item => item.key == key))
+        if (string.IsNullOrWhiteSpace(key))
         {
-            return item.value;
+            throw new ArgumentException("Key is empty or null");
         }
-
-        throw new ArgumentException($"GET: No key '{key}' in table");
+        var index = Math.Abs(key.GetHashCode()) % _values.Length;
+        var result = _values[index].FirstOrDefault(item => item.key == key);
+        if (result == (null, 0))
+        {
+            throw new ArgumentException($"GET: Table does not has key '{key}'");
+        }
+        return result.value;
     }
     
     public void Delete(string key)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(key);
-        var index = Math.Abs(key.GetHashCode()) % _values.Length;
-        foreach (var item in _values[index].Where(item => item.key == key))
+        if (string.IsNullOrWhiteSpace(key))
         {
-            _values[index].Remove(item);
-            Console.WriteLine($"DELETE: Key '{item.key}' with value '{item.value}' removed from table");
-            return;
+            throw new ArgumentException("Key is empty or null");
         }
-        Console.WriteLine($"DELETE: There is no key '{key}'");
+        var index = Math.Abs(key.GetHashCode()) % _values.Length;
+        var result = _values[index].FirstOrDefault(item => item.key == key);
+        if (result == (null, 0))
+        {
+            throw new ArgumentException($"DELETE: Table does not has key '{key}'");
+        }
+        _values[index].Remove(result);
     }
-    
-    public void Print()
+
+    public override string ToString()
     {
-        Console.WriteLine("PRINT:");
-        var counter = 1;
+        var info = new StringBuilder();
+        info.Append('{');
         foreach (var bucket in _values)
         {
-            Console.Write(counter + ": ");
             foreach (var item in bucket)
             {
-                Console.Write($"({item.key}: {item.value}) ");
+                info.Append($"{item.key}: {item.value}, ");
             }
-            Console.WriteLine();
-            counter++;
         }
+
+        if (info.Length == 1)
+        {
+            return info.Append('}').ToString();
+        }
+        info.Remove(info.Length - 2, 2).Append('}');
+        return info.ToString();
     }
 }
