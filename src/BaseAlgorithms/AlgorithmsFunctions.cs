@@ -44,16 +44,14 @@ public static class AlgorithmsFunctions
         return (true, false);
     }
     
-    public static string GetWeekDay(int number)
+    public static string GetWeekDay(int number, int year)
     {
-        int[] daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         var monthNames = System.Globalization.CultureInfo.GetCultureInfo("en-US").DateTimeFormat.MonthNames;
-        const int year = 2007;
         var month = 1;
         var dayCounter = 0;
-        while (dayCounter + daysInMonth[month] < number)
+        while (dayCounter + DateTime.DaysInMonth(year, month) < number)
         {
-            dayCounter += daysInMonth[month-1];
+            dayCounter += DateTime.DaysInMonth(year, month);
             month++;
         }
 

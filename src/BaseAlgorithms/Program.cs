@@ -61,6 +61,8 @@ class Program
     {
         try
         {
+            Console.Write("Insert a year: ");
+            var year = int.Parse(Console.ReadLine()!);
             Console.Write("Insert day of year: ");
             var day = int.Parse(Console.ReadLine()!);
             if (day is < 1 or > 365)
@@ -68,8 +70,9 @@ class Program
                 Console.WriteLine("Error: this is not number of day in year");
                 return;
             }
-
-            var dayName = AlgorithmsFunctions.GetWeekDay(day);
+            
+            
+            var dayName = AlgorithmsFunctions.GetWeekDay(day, year);
             Console.WriteLine(dayName);
         }
         catch (Exception e)
