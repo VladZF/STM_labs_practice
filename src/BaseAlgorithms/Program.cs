@@ -57,6 +57,53 @@ class Program
         }
     }
     
+    static void ToysInKinderGardensConsole()
+    {
+        try
+        {
+            Console.WriteLine("Insert toys list (without spaces in names):");
+            var toysString = Console.ReadLine() ?? string.Empty;
+            if (toysString.Length == 0)
+            {
+                Console.WriteLine("No toys found");
+                return;
+            } 
+            var toysList = toysString.Split().ToHashSet();
+            var city = new City(toysList);
+            Console.Write("Insert gardens count: ");
+            var gardensCount = int.Parse(Console.ReadLine() ?? string.Empty);
+            Console.WriteLine("Insert number of garden and all toys that contain in it in each row:");
+            for (var gardenCounter = 0; gardenCounter < gardensCount; gardenCounter++)
+            {
+                var data = Console.ReadLine()!.Split();
+                var id = int.Parse(data[0]);
+                var toys = data[1..].ToHashSet();
+                var garden = new KinderGarden(id, toys);
+                city.AddGarden(garden);
+            }
+
+            Console.WriteLine("Toys found in all gardens:");
+            if (city.GetToysFoundInAllGardens.Count == 0)
+                Console.WriteLine('-');
+            foreach (var toy in city.GetToysFoundInAllGardens)
+            {
+                Console.WriteLine(toy);
+            }
+
+            Console.WriteLine("Toys not found in any garden:");
+            if (city.GetToysNotFoundInAnyGarden.Count == 0)
+                Console.WriteLine('-');
+            foreach (var toy in city.GetToysNotFoundInAnyGarden)
+            {
+                Console.WriteLine(toy);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error: " + e.Message);
+        }
+    }
+  
     static void GetWeekDayConsole()
     {
         try
@@ -99,6 +146,8 @@ class Program
             case 3:
                 CompressBinarySequenceConsole();
                 break;
+            case 4:
+                ToysInKinderGardensConsole();
             case 5:
                 GetWeekDayConsole();
                 break;
