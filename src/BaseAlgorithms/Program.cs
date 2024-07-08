@@ -103,6 +103,31 @@ class Program
             Console.WriteLine("Error: " + e.Message);
         }
     }
+  
+    static void GetWeekDayConsole()
+    {
+        try
+        {
+            Console.Write("Insert a year: ");
+            var year = int.Parse(Console.ReadLine()!);
+            Console.Write("Insert day of year: ");
+            var day = int.Parse(Console.ReadLine()!);
+            if (day is < 1 or > 365)
+            {
+                Console.WriteLine("Error: this is not number of day in year");
+                return;
+            }
+            
+            
+            var dayName = AlgorithmsFunctions.GetWeekDay(day, year);
+            Console.WriteLine(dayName);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error: {e.Message}");
+        }
+    }
+    
     static void Main(string[] args)
     {
         Console.Write("1 - Task 1\n" +
@@ -123,6 +148,8 @@ class Program
                 break;
             case 4:
                 ToysInKinderGardensConsole();
+            case 5:
+                GetWeekDayConsole();
                 break;
             default:
                 Console.WriteLine("Incorrect operation");
