@@ -82,12 +82,21 @@ class Program
                 city.AddGarden(garden);
             }
 
-            var statuses = city.GetStatisticsAboutToys();
-            Console.WriteLine("Information about toys' placement in city:");
-            foreach (var toy in statuses)
+            Console.WriteLine("Toys found in all gardens:");
+            if (city.GetToysFoundInAllGardens.Count == 0)
+                Console.WriteLine('-');
+            foreach (var toy in city.GetToysFoundInAllGardens)
             {
-                Console.WriteLine($"Toy: {toy.name} | Status: {toy.status}");
-            }  
+                Console.WriteLine(toy);
+            }
+
+            Console.WriteLine("Toys not found in any garden:");
+            if (city.GetToysNotFoundInAnyGarden.Count == 0)
+                Console.WriteLine('-');
+            foreach (var toy in city.GetToysNotFoundInAnyGarden)
+            {
+                Console.WriteLine(toy);
+            }
         }
         catch (Exception e)
         {
