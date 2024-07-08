@@ -13,16 +13,6 @@ class Program
         var operation = int.Parse(Console.ReadLine() ?? string.Empty);
         switch (operation)
         {
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
             default:
                 Console.WriteLine("Incorrect operation");
                 break;
