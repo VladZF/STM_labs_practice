@@ -4,6 +4,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{80497586-5F5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleGit", "src\SampleGit\SampleGit.csproj", "{14FD9ABB-C492-4468-B5E3-52B3455FDE58}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseAlgorithms", "src\BaseAlgorithms\BaseAlgorithms.csproj", "{56DD286B-627B-42B7-9E53-7B601AFF9BF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,8 +16,13 @@ Global
 		{14FD9ABB-C492-4468-B5E3-52B3455FDE58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14FD9ABB-C492-4468-B5E3-52B3455FDE58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14FD9ABB-C492-4468-B5E3-52B3455FDE58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56DD286B-627B-42B7-9E53-7B601AFF9BF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56DD286B-627B-42B7-9E53-7B601AFF9BF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56DD286B-627B-42B7-9E53-7B601AFF9BF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56DD286B-627B-42B7-9E53-7B601AFF9BF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{14FD9ABB-C492-4468-B5E3-52B3455FDE58} = {80497586-5F53-4F3B-9E7C-704DDA1CB424}
+		{56DD286B-627B-42B7-9E53-7B601AFF9BF7} = {80497586-5F53-4F3B-9E7C-704DDA1CB424}
 	EndGlobalSection
 EndGlobal
