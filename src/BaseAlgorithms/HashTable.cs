@@ -77,7 +77,7 @@ public class HashTable
             if (bucketString.Length != 0)
             {
                 info.Append(bucketString).Append("; ");
-            };
+            }
         }
         if (info.Length == 1)
         {

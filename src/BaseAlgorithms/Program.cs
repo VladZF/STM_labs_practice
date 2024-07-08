@@ -91,13 +91,14 @@ class Program
                       "2 - Get value by key\n" +
                       "3 - Delete key with it's value\n" +
                       "4 - Print table\n" +
-                      "5 - Exit from command line\n" +
-                      "Insert command: ");
-        var command = int.Parse(Console.ReadLine()!);
+                      "5 - Exit from command line\n");
+        var command = -1;
         while (command != 5)
         {
-            try
+            try 
             {
+                Console.Write("Insert command: ");
+                command = int.Parse(Console.ReadLine()!);
                 switch (command)
                 {
                     case 1:
@@ -112,19 +113,18 @@ class Program
                     case 4:
                         Console.WriteLine(table);
                         break;
+                    case 5:
+                        Console.WriteLine("Exiting...");
+                        continue;
                     default:
                         Console.WriteLine("Incorrect command");
                         break;
-                } 
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine("Error: " + e.Message);
             }
-            
-
-            Console.Write("Insert command: ");
-            command = int.Parse(Console.ReadLine()!);
         }
     }
     
