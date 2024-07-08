@@ -43,4 +43,19 @@ public static class AlgorithmsFunctions
 
         return (true, false);
     }
+    
+    public static string GetWeekDay(int number, int year)
+    {
+        var monthNames = System.Globalization.CultureInfo.GetCultureInfo("en-US").DateTimeFormat.MonthNames;
+        var month = 1;
+        var dayCounter = 0;
+        while (dayCounter + DateTime.DaysInMonth(year, month) < number)
+        {
+            dayCounter += DateTime.DaysInMonth(year, month);
+            month++;
+        }
+
+        var date = month == 1 ? new DateOnly(year, month, number) : new DateOnly(year, month, number - dayCounter);
+        return $"{monthNames[date.Month-1]} {date.Day}, {date.DayOfWeek.ToString()}";
+    }
 }
