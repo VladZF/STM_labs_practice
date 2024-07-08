@@ -58,7 +58,7 @@ class Program
         }
     }
     
-    public static void PutToHashTableByConsole(ref HashTable table)
+    public static void PutToHashTableByConsole(HashTable table)
     {
         Console.Write("Insert key: ");
         var key = Console.ReadLine()!;
@@ -68,7 +68,7 @@ class Program
         Console.WriteLine($"Added key '{key}' with value {value}");
     }
     
-    public static void GetFromHashTableByConsole(ref HashTable table)
+    public static void GetFromHashTableByConsole(HashTable table)
     {
         Console.Write("Insert key: ");
         var key = Console.ReadLine()!;
@@ -76,7 +76,7 @@ class Program
         Console.WriteLine($"value by key '{key}' is {result}");
     }
     
-    public static void DeleteFromHashTableByConsole(ref HashTable table)
+    public static void DeleteFromHashTableByConsole(HashTable table)
     {
         Console.Write("Insert key: ");
         var key = Console.ReadLine()!;
@@ -101,13 +101,13 @@ class Program
                 switch (command)
                 {
                     case 1:
-                        PutToHashTableByConsole(ref table);
+                        PutToHashTableByConsole(table);
                         break;
                     case 2:
-                        GetFromHashTableByConsole(ref table);
+                        GetFromHashTableByConsole(table);
                         break;
                     case 3:
-                        DeleteFromHashTableByConsole(ref table);
+                        DeleteFromHashTableByConsole(table);
                         break;
                     case 4:
                         Console.WriteLine(table);

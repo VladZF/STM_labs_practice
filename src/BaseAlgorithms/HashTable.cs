@@ -73,12 +73,12 @@ public class HashTable
         info.Append('{');
         foreach (var bucket in _values)
         {
-            foreach (var item in bucket)
+            var bucketString = string.Join("; ", bucket);
+            if (bucketString.Length != 0)
             {
-                info.Append($"{item.key}: {item.value}, ");
-            }
+                info.Append(bucketString).Append("; ");
+            };
         }
-
         if (info.Length == 1)
         {
             return info.Append('}').ToString();
