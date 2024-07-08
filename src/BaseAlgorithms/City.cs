@@ -8,6 +8,7 @@ public class City(HashSet<string> toysList)
 
     public List<string> GetToysNotFoundInAnyGarden =>
         toysList.Where(toy => !_kinderGardens.Any(garden => garden.Contains(toy))).ToList();
+    
     public void AddGarden(KinderGarden garden)
     {
         if (_kinderGardens.FirstOrDefault(x => x.Number == garden.Number) != null)
