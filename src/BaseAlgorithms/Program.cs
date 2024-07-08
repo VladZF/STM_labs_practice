@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Globalization;
 
 namespace BaseAlgorithms;
@@ -80,6 +81,76 @@ class Program
         }
     }
     
+    public static void PutToHashTableByConsole(HashTable table)
+    {
+        Console.Write("Insert key: ");
+        var key = Console.ReadLine()!;
+        Console.Write("Insert value: ");
+        var value = int.Parse(Console.ReadLine()!);
+        table.Put(key, value);
+        Console.WriteLine($"Added key '{key}' with value {value}");
+    }
+    
+    public static void GetFromHashTableByConsole(HashTable table)
+    {
+        Console.Write("Insert key: ");
+        var key = Console.ReadLine()!;
+        var result = table.Get(key);
+        Console.WriteLine($"value by key '{key}' is {result}");
+    }
+    
+    public static void DeleteFromHashTableByConsole(HashTable table)
+    {
+        Console.Write("Insert key: ");
+        var key = Console.ReadLine()!;
+        table.Delete(key);
+        Console.WriteLine($"key '{key}' is deleted");
+    }
+    
+    public static void HashTableConsole()
+    {
+        var table = new HashTable();
+        Console.Write("1 - Put new key with value\n" +
+                      "2 - Get value by key\n" +
+                      "3 - Delete key with it's value\n" +
+                      "4 - Print table\n" +
+                      "5 - Exit from command line\n");
+        var command = -1;
+        while (command != 5)
+        {
+            try 
+            {
+                Console.Write("Insert command: ");
+                command = int.Parse(Console.ReadLine()!);
+                switch (command)
+                {
+                    case 1:
+                        PutToHashTableByConsole(table);
+                        break;
+                    case 2:
+                        GetFromHashTableByConsole(table);
+                        break;
+                    case 3:
+                        DeleteFromHashTableByConsole(table);
+                        break;
+                    case 4:
+                        Console.WriteLine(table);
+                        break;
+                    case 5:
+                        Console.WriteLine("Exiting...");
+                        continue;
+                    default:
+                        Console.WriteLine("Incorrect command");
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e.Message);
+            }
+        }
+    }
+
     static void ToysInKinderGardensConsole()
     {
         try
@@ -177,6 +248,9 @@ class Program
                 break;
             case 5:
                 GetWeekDayConsole();
+                break;
+            case 6:
+                HashTableConsole();
                 break;
             default:
                 Console.WriteLine("Incorrect operation");
