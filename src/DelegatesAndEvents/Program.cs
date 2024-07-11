@@ -2,7 +2,7 @@
 
 namespace DelegatesAndEvents;
 
-class Program
+public static class Program
 {
     private static void CalculatorConsole()
     {
@@ -13,13 +13,13 @@ class Program
             var firstNumber = double.Parse(Console.ReadLine()!, englishCulture);
             Console.Write("Insert second number: ");
             var secondNumber = double.Parse(Console.ReadLine()!, englishCulture);
-            Console.Write("1 - sum\n" +
-                          "2 - subtract\n" +
-                          "3 - multiply\n" +
-                          "4 - divide\n" +
+            Console.Write("'+' - sum\n" +
+                          "'-' - subtract\n" +
+                          "'*' - multiply\n" +
+                          "'/' - divide\n" +
                           "Insert operation: ");
-            var operation = (MathOperation)int.Parse(Console.ReadLine()!);
-            var result = TaskFunctions.Calculator(firstNumber, secondNumber, operation);
+            var operation = Console.ReadLine()!.Trim();
+            var result = Calculator.GetResult(firstNumber, secondNumber, operation);
             Console.WriteLine($"Result: {result.ToString(englishCulture)}");
         }
         catch (Exception e)
