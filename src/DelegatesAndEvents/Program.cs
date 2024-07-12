@@ -40,10 +40,10 @@ public static class Program
                 Console.WriteLine("ERROR: number is not natural");
             }
 
-            var counter = WeekDays.GiveCounter();
-            for (var i = 1; i <= daysCount; i++)
+            var weekDays = WeekDays.GiveWeekDays();
+            for (var day = 1; day <= daysCount; day++)
             {
-                Console.WriteLine($"day {i}: {counter()}");
+                Console.WriteLine($"day {day}: {weekDays()}");
             }
         }
         catch (Exception e)
