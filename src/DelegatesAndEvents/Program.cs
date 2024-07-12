@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using DelegatesAndEvents.Task3Classes;
 
 namespace DelegatesAndEvents;
 
@@ -27,6 +28,33 @@ public static class Program
             Console.WriteLine("Error: " + e.Message);
         }
     }
+    
+    private static void QuadraticFunctionConsole()
+    {
+        try
+        {
+            Console.Write("Insert elder coefficient: ");
+            var elderCoefficient = int.Parse(Console.ReadLine()!);
+            Console.Write("Insert middle coefficient: ");
+            var middleCoefficient = int.Parse(Console.ReadLine()!);
+            Console.Write("Insert free coefficient: ");
+            var freeCoefficient = int.Parse(Console.ReadLine()!);
+            var polynomial = QuadraticPolynomial.GetPolynomial(elderCoefficient, middleCoefficient, freeCoefficient);
+            Console.WriteLine("Insert count of argument values for insert: ");
+            var argCount = int.Parse(Console.ReadLine()!);
+            for (var counter = 0; counter < argCount; counter++)
+            {
+                Console.Write("Insert argument: ");
+                var argument = int.Parse(Console.ReadLine()!);
+                Console.WriteLine($"argument: {argument}; value: {polynomial(argument)}");
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("ERROR: " + e.Message);
+        }
+        
+    }
 
     public static void Main(string[] args)
     {
@@ -41,6 +69,9 @@ public static class Program
         {
             case 1:
                 CalculatorConsole();
+                break;
+            case 3:
+                QuadraticFunctionConsole();
                 break;
             default:
                 Console.WriteLine("Incorrect operation");
