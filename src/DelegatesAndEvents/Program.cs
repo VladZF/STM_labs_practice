@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using DelegatesAndEvents.Task4Classes;
-using EventHandler = DelegatesAndEvents.Task4Classes.EventHandler;
 
 namespace DelegatesAndEvents;
 
@@ -34,14 +33,18 @@ public static class Program
     {
         try
         {
-            var morning = new Post("Morning", "There are many birds out of window at this morning!");
-            var party = new Post("Birthday", "Today we party birthday of our friend Peter");
-            var handler = new EventHandler();
-            morning.Subscribe(handler.Handler);
-            party.Subscribe(handler.Handler);
-            morning.Title = "Birds";
-            party.Text = "Today we party the 20th birthday of our friend Peter in night club";
-            morning.Text = "";
+            var coolMessenger = new Poster("Cool messenger");
+            var wallOfArts = new Poster("Wall of arts");
+            var handlers = new EventHandlers();
+            coolMessenger.OnPostAdded += handlers.WhenAdded;
+            coolMessenger.OnPostDeleted += handlers.WhenDeleted;
+            wallOfArts.OnPostAdded += handlers.WhenAdded;
+            wallOfArts.OnPostDeleted += handlers.WhenDeleted;
+            wallOfArts.AddPost("Picture", "Mona Liza is very beautiful woman");
+            coolMessenger.AddPost("Party", "Today we party the 20th birthday of our friend Peter");
+            coolMessenger.AddPost("Army", "So, I will go to the army yesterday. Wish me good luck");
+            coolMessenger.DeletePost("Party");
+            wallOfArts.DeletePost("Picture");
         }
         catch (Exception e)
         {
