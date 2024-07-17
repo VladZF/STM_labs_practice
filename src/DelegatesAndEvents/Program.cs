@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using DelegatesAndEvents.Task5Classes;
 
 namespace DelegatesAndEvents;
 
@@ -27,6 +28,18 @@ public static class Program
             Console.WriteLine("Error: " + e.Message);
         }
     }
+    
+    private static void StringLoaderConsole()
+    {
+        var loader = new LimitedStringLoader("ABC", "XYZ", 3);
+        loader.Load("Test.txt");
+        Console.WriteLine($"Loaded: {loader.LoadedStrings.Count()} line(s)");
+        Console.WriteLine($"Prohibited: {loader.ProhibitionCount} line(s)");
+        foreach (var row in loader.LoadedStrings)
+        {
+            Console.WriteLine(row);
+        }
+    }
 
     public static void Main(string[] args)
     {
@@ -41,6 +54,9 @@ public static class Program
         {
             case 1:
                 CalculatorConsole();
+                break;
+            case 5:
+                StringLoaderConsole();
                 break;
             default:
                 Console.WriteLine("Incorrect operation");
