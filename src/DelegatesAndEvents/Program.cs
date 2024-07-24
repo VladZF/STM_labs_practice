@@ -1,6 +1,7 @@
 using System.Globalization;
-using DelegatesAndEvents.Task3Classes;
 using DelegatesAndEvents.Task2Classes;
+using DelegatesAndEvents.Task3Classes;
+using DelegatesAndEvents.Task4Classes;
 
 namespace DelegatesAndEvents;
 
@@ -29,7 +30,29 @@ public static class Program
             Console.WriteLine("Error: " + e.Message);
         }
     }
-    
+
+    private static void EventConsole()
+    {
+        try
+        {
+            var coolMessenger = new Poster("Cool messenger");
+            var wallOfArts = new Poster("Wall of arts");
+            var handlers = new EventHandlers();
+            coolMessenger.OnPostAdded += handlers.WhenAdded;
+            coolMessenger.OnPostDeleted += handlers.WhenDeleted;
+            wallOfArts.OnPostAdded += handlers.WhenAdded;
+            wallOfArts.OnPostDeleted += handlers.WhenDeleted;
+            wallOfArts.AddPost("Picture", "Mona Liza is very beautiful woman");
+            coolMessenger.AddPost("Party", "Today we party the 20th birthday of our friend Peter");
+            coolMessenger.AddPost("Army", "So, I will go to the army yesterday. Wish me good luck");
+            coolMessenger.DeletePost("Party");
+            wallOfArts.DeletePost("Picture");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("ERROR: " + e.Message);
+        }
+    }
 
     private static void QuadraticFunctionConsole()
     {
@@ -101,6 +124,9 @@ public static class Program
                 break;
             case 3:
                 QuadraticFunctionConsole();
+                break;
+            case 4:
+                EventConsole();
                 break;
             default:
                 Console.WriteLine("Incorrect operation");
