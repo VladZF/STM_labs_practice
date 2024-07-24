@@ -81,12 +81,12 @@ public partial class LimitedStringLoader
     
     public void Load(string fileName)
     {
-        if (!File.Exists($@"..\..\..\Task5Classes\TestData\{fileName}"))
+        if (!File.Exists(fileName))
         {
             _loadedStrings.Clear();
             throw new FileNotFoundException($"File {fileName} not found");
         }
-        using var reader = new StreamReader($@"..\..\..\Task5Classes\TestData\{fileName}");
+        using var reader = new StreamReader(fileName);
         var prohibitionCounter = 0;
         var row = 0;
         while (!reader.EndOfStream)

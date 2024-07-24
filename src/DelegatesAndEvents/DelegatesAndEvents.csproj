@@ -7,4 +7,15 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <None Remove="Task5Classes\TestData\Test.txt" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="LoaderTest.txt" />
+      <Content Include="LoaderTest.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

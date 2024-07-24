@@ -32,7 +32,7 @@ public static class Program
     private static void StringLoaderConsole()
     {
         var loader = new LimitedStringLoader("ABC", "XYZ", 3);
-        loader.Load("Test.txt");
+        loader.Load("LoaderTest.txt");
         Console.WriteLine($"Loaded: {loader.LoadedStrings.Count()} line(s)");
         Console.WriteLine($"Prohibited: {loader.ProhibitionCount} line(s)");
         foreach (var row in loader.LoadedStrings)
