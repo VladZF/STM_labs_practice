@@ -2,6 +2,7 @@ using System.Globalization;
 using DelegatesAndEvents.Task2Classes;
 using DelegatesAndEvents.Task3Classes;
 using DelegatesAndEvents.Task4Classes;
+using DelegatesAndEvents.Task5Classes;
 
 namespace DelegatesAndEvents;
 
@@ -28,6 +29,18 @@ public static class Program
         catch (Exception e)
         {
             Console.WriteLine("Error: " + e.Message);
+        }
+    }
+    
+    private static void StringLoaderConsole()
+    {
+        var loader = new LimitedStringLoader("ABC", "XYZ", 3);
+        loader.Load("LoaderTest.txt");
+        Console.WriteLine($"Loaded: {loader.LoadedStrings.Count()} line(s)");
+        Console.WriteLine($"Prohibited: {loader.ProhibitionCount} line(s)");
+        foreach (var row in loader.LoadedStrings)
+        {
+            Console.WriteLine(row);
         }
     }
 
@@ -127,6 +140,9 @@ public static class Program
                 break;
             case 4:
                 EventConsole();
+                break;
+            case 5:
+                StringLoaderConsole();
                 break;
             default:
                 Console.WriteLine("Incorrect operation");
