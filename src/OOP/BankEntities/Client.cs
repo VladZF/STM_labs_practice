@@ -8,15 +8,17 @@ public class Client
     private Phone? _phone;
     private Passport? _passport;
     
-    public Client(string name, string surname, string patronymic, string? phone = null, string? passport = null)
+    public Client(Guid id, string name, string surname, string patronymic, string? phone = null, string? passport = null)
     {
+        Id = id;
         Name = name;
         Surname = surname;
         Patronymic = patronymic;
         Phone = phone;
         Passport = passport;
     }
-    
+
+    public Guid Id { get; private init; }
     public string Name
     {
         get => _name;
@@ -61,20 +63,28 @@ public class Client
     
     public string? Phone
     {
-        get => _phone?.Value ?? "No phone";
+        get => _phone?.Value;
         set
         {
-            if (value != null) _phone = OOP.Phone.From(value);
+            if (value != null)
+            {
+                _phone = OOP.Phone.From(value);
+                return;
+            }
             _phone = null;
         }
     }
 
     public string? Passport
     {
-        get => _passport?.Value ?? "No passport";
+        get => _passport?.Value;
         set
         {
-            if (value != null) _passport = OOP.Passport.From(value);
+            if (value != null)
+            {
+                _passport = OOP.Passport.From(value);
+                return;
+            }
             _passport = null;
         }
     }
