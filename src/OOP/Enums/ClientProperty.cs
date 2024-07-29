@@ -2,9 +2,9 @@
 
 public enum ClientProperty
 {
-    Name,
-    Surname,
-    Patronymic,
-    Passport,
-    Phone
+    Name = 1,
+    Surname = 2,
+    Patronymic = 3,
+    Passport = 4,
+    Phone = 5
 }
