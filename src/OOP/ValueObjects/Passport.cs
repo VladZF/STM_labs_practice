@@ -13,6 +13,6 @@ public partial class Passport : ValueOf<string, Passport>
         }
     }
     
-    [GeneratedRegex(@"^(\+7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$")]
+    [GeneratedRegex("^([0-9]{4}\\s{1}[0-9]{6})?$")]
     private static partial Regex PassportPattern();
 }
