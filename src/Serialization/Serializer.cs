@@ -1,7 +1,9 @@
 ﻿using System.Collections;
+using System.Reflection;
 using System.Text;
+using System.Text.Json.Serialization;
 
-namespace ReflectionSerializer;
+namespace Serialization;
 
 public static class Serializer
 {
@@ -34,7 +36,12 @@ public static class Serializer
         var converted = new StringBuilder("{");
         foreach (var property in type.GetProperties())
         {
-            converted.Append($"{property.Name}: {Serialize(property.GetValue(obj))},");
+            if (property.GetCustomAttribute<JsonIgnoreAttribute>() != null)
+            {
+                continue;
+            }
+            var propertyName = property.GetCustomAttribute<JsonPropertyNameAttribute>()?.Name ?? property.Name;
+            converted.Append($"\"{propertyName}\": {Serialize(property.GetValue(obj))},");
         }
         return converted.Length == 1
             ? converted.Append('}').ToString()
@@ -47,9 +54,17 @@ public static class Serializer
             return "null";
         }
         var type = obj.GetType();
-        if (type.IsPrimitive || type == typeof(string))
+        if (type == typeof(string))
+        {
+            return "\"" + obj + "\"";
+        }
+        if (type.IsPrimitive)
         {
             return obj.ToString();
+        }
+        if (type.IsEnum)
+        {
+            return "\"" + obj + "\"";
         }
         if (type.GetInterfaces().Contains(typeof(IDictionary)))
         {
@@ -59,7 +74,7 @@ public static class Serializer
         {
             return SerializeSequence((IEnumerable)obj);
         }
-
+        
         return SerializeClass(obj, type);
     }
 }
