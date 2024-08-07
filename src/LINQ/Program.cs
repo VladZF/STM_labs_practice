@@ -10,24 +10,24 @@ class Program
     {
         Tables.Customers =
         [
-            new Customer(1, "Kirill", 2),
-            new Customer(2, "Darya", 2),
-            new Customer(3, "Meow", 1),
-            new Customer(4, "Vlad", 1),
+            new Customer(1, "Vlad", 2),
+            new Customer(2, "Fedor", 2),
+            new Customer(3, "Ivan", 1),
+            new Customer(4, "Dmitriy", 1),
         ];
 
         Tables.Orders =
         [
-            new Order(1, 1, 2500, new DateTime(2002, 3, 23)),
-            new Order(2, 3, 5678, new DateTime(2024, 9, 5)),
-            new Order(3, 3, 10000, new DateTime(2023, 12, 1)),
-            new Order(4, 3, 1234, new DateTime(2020, 5, 2))
+            new Order(1, 1, 2500, new DateTime(2002, 3, 16)),
+            new Order(2, 1, 5000, new DateTime(2024, 9, 12)),
+            new Order(3, 1, 20000, new DateTime(2023, 12, 7)),
+            new Order(4, 3, 1888, new DateTime(2020, 5, 1))
         ];
 
         Tables.Cities =
         [
-            new City(1, "Balahna", 606403),
-            new City(2, "Los-Angeles", 555555)
+            new City(1, "Los-Angeles", 223123),
+            new City(2, "Dzerzhinsk", 1212122)
         ];
     }
     
