@@ -18,10 +18,12 @@ class Program
 
         Tables.Orders =
         [
-            new Order(1, 1, 2500, new DateTime(2002, 3, 16)),
-            new Order(2, 1, 5000, new DateTime(2024, 9, 12)),
-            new Order(3, 1, 20000, new DateTime(2023, 12, 7)),
-            new Order(4, 3, 1888, new DateTime(2020, 5, 1))
+            new Order(1, 1, 100, new DateTime(2002, 3, 16)),
+            new Order(2, 3, 5000, new DateTime(2024, 9, 12)),
+            new Order(3, 2, 200, new DateTime(2023, 12, 7)),
+            new Order(4, 4, 1888, new DateTime(2020, 5, 1)),
+            new Order(5, 1, 300, new DateTime(2023, 5, 12)),
+            new Order(6, 1, 400, new DateTime(2023, 1, 1))
         ];
 
         Tables.Cities =
