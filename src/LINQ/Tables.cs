@@ -1,4 +1,6 @@
-﻿namespace LINQ;
+﻿using LINQ.Entities;
+
+namespace LINQ;
 
 public class Tables
 {
