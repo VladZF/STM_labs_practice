@@ -1,4 +1,7 @@
-﻿namespace OOP;
+﻿using System.Text.Json.Serialization;
+using OOP.Enums;
+
+namespace OOP;
 
 public class Client
 {
@@ -18,6 +21,12 @@ public class Client
         Passport = passport;
     }
 
+    [JsonIgnore]
+    public DateTime ChangedAt { get; private set; }
+    
+    [JsonIgnore]
+    public ClientProperty? LastChangedProperty { get; private set; } = null;
+
     public Guid Id { get; private init; }
     public string Name
     {
@@ -29,6 +38,8 @@ public class Client
                 throw new ArgumentException("Empty name");
             }
 
+            LastChangedProperty = ClientProperty.Name;
+            ChangedAt = DateTime.Now;
             _name = value;
         }
     }
@@ -43,6 +54,8 @@ public class Client
                 throw new ArgumentException("Empty surname");
             }
 
+            LastChangedProperty = ClientProperty.Surname;
+            ChangedAt = DateTime.Now;
             _surname = value;
         }
     }
@@ -57,6 +70,8 @@ public class Client
                 throw new ArgumentException("Empty patronymic");
             }
 
+            LastChangedProperty = ClientProperty.Patronymic;
+            ChangedAt = DateTime.Now;
             _patronymic = value;
         }
     }
@@ -69,8 +84,13 @@ public class Client
             if (value != null)
             {
                 _phone = OOP.Phone.From(value);
+                LastChangedProperty = ClientProperty.Phone;
+                ChangedAt = DateTime.Now;
                 return;
             }
+            
+            LastChangedProperty = ClientProperty.Phone;
+            ChangedAt = DateTime.Now;
             _phone = null;
         }
     }
@@ -83,8 +103,13 @@ public class Client
             if (value != null)
             {
                 _passport = OOP.Passport.From(value);
+                LastChangedProperty = ClientProperty.Passport;
+                ChangedAt = DateTime.Now;
                 return;
             }
+            
+            LastChangedProperty = ClientProperty.Passport;
+            ChangedAt = DateTime.Now;
             _passport = null;
         }
     }

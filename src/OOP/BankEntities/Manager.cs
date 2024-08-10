@@ -11,26 +11,43 @@ public class Manager : Employee
         {
             throw new ArgumentException("There is no client with this ID");
         }
+
+        string? oldValue;
         switch (property)
         {
             case ClientProperty.Name:
+                oldValue = client.Name;
                 client.Name = newValue;
                 break;
             case ClientProperty.Surname:
+                oldValue = client.Surname;
                 client.Surname = newValue;
                 break;
             case ClientProperty.Patronymic:
+                oldValue = client.Patronymic;
                 client.Patronymic = newValue;
                 break;
             case ClientProperty.Passport:
+                oldValue = client.Passport;
                 client.Passport = newValue;
                 break;
             case ClientProperty.Phone:
+                oldValue = client.Phone;
                 client.Phone = newValue;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(property), property, null);
         }
+        db.AddChange(
+            new ChangeInfo(
+                client.Id,
+                DateTime.Now, 
+                nameof(Manager),
+                client.LastChangedProperty.ToString(),
+                oldValue,
+                newValue
+            )
+        );
         db.Save();
     }
 

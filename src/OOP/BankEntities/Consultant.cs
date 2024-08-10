@@ -24,7 +24,19 @@ public class Consultant : Employee
                 {
                     throw new ArgumentException("Phone number is empty");
                 }
+
+                var oldValue = client.Phone;
                 client.Phone = newValue;
+                db.AddChange(
+                    new ChangeInfo(
+                        client.Id,
+                        DateTime.Now,
+                        nameof(Consultant),
+                        client.LastChangedProperty.ToString(),
+                        oldValue,
+                        client.Phone
+                    )
+                );
                 db.Save();
                 break;
             default:

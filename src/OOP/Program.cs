@@ -9,13 +9,20 @@ class Program
         try
         {
             Console.WriteLine("Insert path to file with clients info:");
-            var filepath = Console.ReadLine()!;
-            if (!filepath.EndsWith(".json"))
+            var clientsPath = Console.ReadLine()!;
+            if (!clientsPath.EndsWith(".json"))
             {
                 Console.WriteLine("Error: File must be .json");
                 return;
             }
-            var bank = new BankApplication(new DataBase(filepath));
+            Console.WriteLine("Insert path to file with changes info:");
+            var changesPath = Console.ReadLine()!;
+            if (!changesPath.EndsWith(".json"))
+            {
+                Console.WriteLine("Error: File must be .json");
+                return;
+            }
+            var bank = new BankApplication(new DataBase(clientsPath, changesPath));
             bank.Start();
         }
         catch (Exception e)
@@ -24,3 +31,6 @@ class Program
         }
     }
 }
+
+//E:\Projects\STM_labs_practice\src\OOP\Clients.json
+//E:\Projects\STM_labs_practice\src\OOP\Changes.json

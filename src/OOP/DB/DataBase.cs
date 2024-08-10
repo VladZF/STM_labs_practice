@@ -4,16 +4,22 @@ namespace OOP;
 
 public class DataBase
 {
-    private readonly string _filepath;
+    private readonly string _clientsTablePath;
+    private readonly string _changesTablePath;
     private readonly HashSet<Client> _clients;
+    private readonly HashSet<ChangeInfo> _changes;
 
     public IEnumerable<Client> Clients => _clients;
+    public IEnumerable<ChangeInfo> Changes => _changes;
     
-    public DataBase(string filepath)
+    public DataBase(string clientsTablePath, string changesTablePath)
     {
-        var json = File.ReadAllText(filepath);
-        _clients = JsonSerializer.Deserialize<HashSet<Client>>(json)!;
-        _filepath = filepath;
+        var jsonClients = File.ReadAllText(clientsTablePath);
+        var jsonChanges = File.ReadAllText(changesTablePath);
+        _clients = JsonSerializer.Deserialize<HashSet<Client>>(jsonClients)!;
+        _changes = JsonSerializer.Deserialize<HashSet<ChangeInfo>>(jsonChanges)!;
+        _clientsTablePath = clientsTablePath;
+        _changesTablePath = changesTablePath;
     }
     
     public void AddClient(string name, string surname, string patronymic, string? phone = null, string? passport = null)
@@ -33,12 +39,20 @@ public class DataBase
         _clients.Remove(client);
         Save();
     }
+    
+    public void AddChange(ChangeInfo change)
+    {
+        _changes.Add(change);
+    }
 
     public void Save()
     {
-        using var stream = new StreamWriter(_filepath);
         var options = new JsonSerializerOptions { WriteIndented = true };
-        var json = JsonSerializer.Serialize(Clients, options);
-        stream.Write(json);
+        using var clientsStream = new StreamWriter(_clientsTablePath);
+        using var changesStream = new StreamWriter(_changesTablePath);
+        var jsonClients = JsonSerializer.Serialize(Clients, options);
+        var jsonChanges = JsonSerializer.Serialize(Changes, options);
+        clientsStream.Write(jsonClients);
+        changesStream.Write(jsonChanges);
     }
 }
