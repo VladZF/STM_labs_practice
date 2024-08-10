@@ -31,6 +31,3 @@ class Program
         }
     }
 }
-
-//E:\Projects\STM_labs_practice\src\OOP\Clients.json
-//E:\Projects\STM_labs_practice\src\OOP\Changes.json
