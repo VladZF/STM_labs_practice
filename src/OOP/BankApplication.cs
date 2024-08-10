@@ -24,7 +24,10 @@ public class BankApplication(DataBase db)
                   InteractWithClients();
                   break;
                case 2:
-                  throw new NotImplementedException("Manager class is not implemented for now");
+                  _worker = new Manager();
+                  Console.WriteLine("You authorized as manager");
+                  InteractWithClients();
+                  break;
                case 3:
                   continue;
                default:
@@ -44,7 +47,7 @@ public class BankApplication(DataBase db)
    private void InteractWithClients()
    {
       var command = -1;
-      while (command != 3)
+      while (command != 5)
       {
          PrintCommands();
          Console.Write("Choose command: ");
@@ -60,6 +63,12 @@ public class BankApplication(DataBase db)
                   ChangeClientPropertyConsole();
                   break;
                case 3:
+                  AddClientToDbConsole();
+                  break;
+               case 4:
+                  RemoveClientFromDbConsole();
+                  break;
+               case 5:
                   continue;
                default:
                   Console.WriteLine("Incorrect command");
@@ -71,6 +80,35 @@ public class BankApplication(DataBase db)
             Console.WriteLine($"Error: {e.Message}");
          }
       }
+   }
+   
+   private void AddClientToDbConsole()
+   { 
+      Console.Write("Name: ");
+      var name = Console.ReadLine()!;
+      Console.Write("Surname: ");
+      var surname = Console.ReadLine()!;
+      Console.Write("Patronymic: ");
+      var patronymic = Console.ReadLine()!;
+      Console.Write("Phone ('-' if no info): ");
+      var phone = Console.ReadLine()!;
+      Console.Write("Passport ('-' if no info): ");
+      var passport = Console.ReadLine()!;
+      _worker?.AddClient(
+         db,
+         name,
+         surname,
+         patronymic,
+         phone.Trim() != "-" ? phone : null,
+         passport.Trim() != "-" ? passport : null
+      );
+   }
+   
+   private void RemoveClientFromDbConsole()
+   {
+      Console.Write("ID: ");
+      var id = Guid.Parse(Console.ReadLine()!);
+      _worker?.RemoveClient(db, id);
    }
    
    private void GetClientPropertyConsole()
@@ -123,7 +161,9 @@ public class BankApplication(DataBase db)
    {
       Console.WriteLine("1. Get client property by ID");
       Console.WriteLine("2. Change client property by ID");
-      Console.WriteLine("3. Logout from account");
+      Console.WriteLine("3. Add new client to database");
+      Console.WriteLine("4. Remove client from database");
+      Console.WriteLine("5. Logout from account");
    }
    
    private static void PrintAuthChooses()
