@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "157fd6be-2689-4e61-b3d7-f7ddac6d6f87",
+    "Name": "Andrey",
+    "Surname": "Vavilonov",
+    "Patronymic": "Petrovich",
+    "Phone": "89915556677",
+    "Passport": null
+  },
+  {
+    "Id": "89d1f1e8-3178-46ee-ac2f-9cccf6ec05f0",
+    "Name": "Roman",
+    "Surname": "Petrov",
+    "Patronymic": "Sergeevich",
+    "Phone": null,
+    "Passport": "2231 132131"
+  }
+]
