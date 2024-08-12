@@ -1,0 +1,18 @@
+[
+  {
+    "ClientId": "157fd6be-2689-4e61-b3d7-f7ddac6d6f87",
+    "ChangedAt": "2024-08-11T02:03:19.2544864+03:00",
+    "PropertyName": "Surname",
+    "WorkerName": "Manager",
+    "OldValue": "Andreev",
+    "NewValue": "Vavilonov"
+  },
+  {
+    "ClientId": "157fd6be-2689-4e61-b3d7-f7ddac6d6f87",
+    "ChangedAt": "2024-08-11T02:18:35.3737737+03:00",
+    "PropertyName": "Phone",
+    "WorkerName": "Consultant",
+    "OldValue": "89992321231",
+    "NewValue": "89915556677"
+  }
+]
