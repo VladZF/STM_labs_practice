@@ -9,34 +9,43 @@ namespace ThreadsUI;
 /// </summary>
 public partial class MainWindow : Window
 {
+    private Connector _connector;
     private int _launchedThreadsCount;
     private int _threadsForStartCount;
     private int _delayForStart;
     private int _itemsPerIterationForStart;
-    private const int MaxThreads = 16;
+    private int _lastThreadNumber = 1;
 
     public MainWindow()
     {
         InitializeComponent();
-        _launchedThreadsCount = 0;
         StopButton.IsEnabled = false;
         StopAllButton.IsEnabled = false;
+    }
+
+    private void OpenConsole()
+    {
+        _connector = new Connector("ThreadsConsole.exe", this);
+        _connector.Start();
+        ActiveThreadsList.Items.Add("Все потоки");
+        ActiveThreadsList.Items.Add("Главный поток");
+        _launchedThreadsCount += 2;
     }
 
     private void StartButton_Click(object sender, RoutedEventArgs e)
     {
         if (_threadsForStartCount == 0)
         {
-            MessageBox.Show("Потоков не было запущено");
-        }
-
-        if (_launchedThreadsCount + _threadsForStartCount > MaxThreads)
-        {
-            MessageBox.Show($"Количество запущенных потоков должно быть не больше {MaxThreads}");
             return;
         }
+        if (_launchedThreadsCount == 0)
+        {
+            OpenConsole();
+        }
+        _connector.SendCommand($"Start {_threadsForStartCount} {_delayForStart} {_itemsPerIterationForStart}");
         _launchedThreadsCount += _threadsForStartCount;
-        WorkingThreadsInfoBlock.Text = $"Количество запущенных потоков: {_launchedThreadsCount}";
+        ActiveThreadsList.Items.Add($"Поток {_lastThreadNumber}");
+        _lastThreadNumber++;
         StopButton.IsEnabled = true;
         StopAllButton.IsEnabled = true;
     }
@@ -50,19 +59,15 @@ public partial class MainWindow : Window
         if (_launchedThreadsCount == 0) 
         {
             MessageBox.Show("Все потоки остановлены");
-            WorkingThreadsInfoBlock.Text = "Ни один поток не запущен";
             StopButton.IsEnabled = false;
             StopAllButton.IsEnabled = false;
-            return;
         }
-        WorkingThreadsInfoBlock.Text = $"Количество запущенных потоков: {_launchedThreadsCount}";
     }
 
     private void StopAllButton_Click(object sender, RoutedEventArgs e)
     {
         _launchedThreadsCount = 0;
         MessageBox.Show("Все потоки остановлены");
-        WorkingThreadsInfoBlock.Text = "Ни один поток не запущен";
         StopButton.IsEnabled = false;
         StopAllButton.IsEnabled = false;
     }

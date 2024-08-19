@@ -2,8 +2,8 @@
 
 public class FileReader
 {
-    public Task Task { get; set; }
-    public CancellationTokenSource TokenSource = new();
+    private Task _task;
+    private readonly CancellationTokenSource _tokenSource = new();
     private readonly int _delay;
     private readonly int _itemsPerIteration;
     private readonly string _path;
@@ -15,27 +15,43 @@ public class FileReader
         _delay = delay;
     }
 
-    private void ReadFile()
+    private void ReadFile(StreamWriter writer)
     {
-        using var streamReader = new StreamReader(_path);
+        var streamReader = new StreamReader(_path);
         while (!streamReader.EndOfStream)
         {
+            if (_tokenSource.IsCancellationRequested)
+            {
+                break;
+            }
             for (var i = 0; i < _itemsPerIteration && !streamReader.EndOfStream; i++)
             {
-                Console.WriteLine(streamReader.ReadLine());
+                writer.WriteLine(streamReader.ReadLine());
+                writer.Flush();
             }
             Thread.Sleep(_delay);
         }
     }
     
-    public void Start()
+    public void StartReader(StreamWriter writer)
     {
-        Task.Run(ReadFile);
+        _task = Task.Run(() => ReadFile(writer));
     }
     
     public void StopReader()
     {
-        TokenSource.Cancel();
-        Task.Wait();
+        _tokenSource.Cancel();
+        try
+        {
+            _task.Wait();
+        }
+        catch (AggregateException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            _tokenSource.Dispose();
+        }
     }
 }
