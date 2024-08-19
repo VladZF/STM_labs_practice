@@ -6,7 +6,7 @@ public class ThreadController(NamedPipeServerStream serverStream)
 {
     private readonly List<FileReader> _readers = [];
     private NamedPipeServerStream _serverStream = serverStream;
-    private StreamWriter _writer = new(serverStream);
+    public StreamWriter Writer = new(serverStream);
 
     public int ThreadsCount => _readers.Count;
     
@@ -16,17 +16,13 @@ public class ThreadController(NamedPipeServerStream serverStream)
         {
             var reader = new FileReader(path, delay, itemsPerIteration, _readers.Count + 1);
             _readers.Add(reader);
-            reader.StartReader(_writer);
+            reader.StartReader(Writer);
         }
     }
     public void RemoveLastReader()
     {
         _readers.Last().StopReader();
         _readers.RemoveAt(_readers.Count - 1);
-        if (_readers.Count == 0)
-        {
-            _writer.Dispose();
-        }
     }
     
     public void StopAllReaders()

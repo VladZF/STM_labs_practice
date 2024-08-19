@@ -27,7 +27,7 @@ public class FileReader
             {
                 writer.WriteLine($"Thread {number} aborted");
                 writer.Flush();
-                break;
+                return;
             }
             for (var i = 0; i < _itemsPerIteration && !streamReader.EndOfStream; i++)
             {
@@ -37,6 +37,8 @@ public class FileReader
             Thread.Sleep(_delay);
         }
         IsFinished = true;
+        writer.WriteLine($"Thread {number} finished");
+        writer.Flush();
     }
     
     public void StartReader(StreamWriter writer)

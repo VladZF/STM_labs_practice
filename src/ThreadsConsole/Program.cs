@@ -40,5 +40,6 @@ class Program
             }
             Console.WriteLine("Incorrect command");
         }
+        threadController.Writer.Dispose();
     }
 }
