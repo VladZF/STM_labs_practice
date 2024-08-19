@@ -11,10 +11,9 @@ class Program
         serverStream.WaitForConnection();
         var threadController = new ThreadController(serverStream);
         Console.WriteLine("Connected");
-        var command = string.Empty;
         while (true)
         {
-            command = Console.ReadLine();
+            var command = Console.ReadLine();
             if (string.IsNullOrEmpty(command))
             {
                 continue;

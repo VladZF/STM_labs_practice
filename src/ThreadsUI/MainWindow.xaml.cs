@@ -88,7 +88,6 @@ public partial class MainWindow : Window
             return;
         }
         CloseConsole();
-        MessageBox.Show("Все потоки остановлены");
         StopButton.IsEnabled = false;
         StopAllButton.IsEnabled = false;
         StringsOutputBox.Items.Clear();
@@ -97,7 +96,6 @@ public partial class MainWindow : Window
     private void StopAllButton_Click(object sender, RoutedEventArgs e)
     {
         CloseConsole();
-        MessageBox.Show("Все потоки остановлены");
         StopButton.IsEnabled = false;
         StopAllButton.IsEnabled = false;
         StringsOutputBox.Items.Clear();

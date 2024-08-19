@@ -38,7 +38,6 @@ public class FileReader
         }
         writer.WriteLine($"Thread {number} finished");
         writer.Flush();
-        writer.Dispose();
     }
     
     public void StartReader(StreamWriter writer)
