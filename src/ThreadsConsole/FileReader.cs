@@ -8,7 +8,6 @@ public class FileReader
     private readonly int _delay;
     private readonly int _itemsPerIteration;
     private readonly string _path;
-    public bool IsFinished { get; private set; }
     
     public FileReader(string path, int delay, int itemsPerIteration, int number)
     {
@@ -27,6 +26,7 @@ public class FileReader
             {
                 writer.WriteLine($"Thread {number} aborted");
                 writer.Flush();
+                _tokenSource.Dispose();
                 return;
             }
             for (var i = 0; i < _itemsPerIteration && !streamReader.EndOfStream; i++)
@@ -36,9 +36,9 @@ public class FileReader
             }
             Thread.Sleep(_delay);
         }
-        IsFinished = true;
         writer.WriteLine($"Thread {number} finished");
         writer.Flush();
+        writer.Dispose();
     }
     
     public void StartReader(StreamWriter writer)
@@ -46,20 +46,5 @@ public class FileReader
         _task = Task.Run(() => ReadFile(writer, _number));
     }
     
-    public void StopReader()
-    {
-        _tokenSource.Cancel();
-        try
-        {
-            _task.Wait();
-        }
-        catch (AggregateException e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            _tokenSource.Dispose();
-        }
-    }
+    public void StopReader() => _tokenSource.Cancel();
 }

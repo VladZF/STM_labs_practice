@@ -38,6 +38,16 @@ public partial class MainWindow : Window
         ActiveThreadsList.Items.Clear();
         StringsOutputBox.Items.Clear();
     }
+    
+    public void IfConsoleClosedByUser()
+    {
+        _connector.Stop();
+        ActiveThreadsList.Items.Clear();
+        StringsOutputBox.Items.Clear();
+        StopButton.IsEnabled = false;
+        StopAllButton.IsEnabled = false;
+        MessageBox.Show("Консоль закрыта");
+    }
 
     private void StartButton_Click(object sender, RoutedEventArgs e)
     {
@@ -81,11 +91,11 @@ public partial class MainWindow : Window
         MessageBox.Show("Все потоки остановлены");
         StopButton.IsEnabled = false;
         StopAllButton.IsEnabled = false;
+        StringsOutputBox.Items.Clear();
     }
 
     private void StopAllButton_Click(object sender, RoutedEventArgs e)
     {
-        _connector.SendCommand("Stop all");
         CloseConsole();
         MessageBox.Show("Все потоки остановлены");
         StopButton.IsEnabled = false;

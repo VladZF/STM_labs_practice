@@ -2,6 +2,7 @@
 using System.IO;
 using System.IO.Pipes;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace ThreadsUI;
 
@@ -19,8 +20,12 @@ public class Connector
         _consoleProcess.EnableRaisingEvents = true;
         _consoleProcess.StartInfo.UseShellExecute = false;
         _consoleProcess.StartInfo.FileName = binName;
+        _consoleProcess.Exited += ConsoleProcessOnExited;
         _consoleProcess.Start();
     }
+
+    private void ConsoleProcessOnExited(object? sender, EventArgs e) =>
+        _window.Dispatcher.Invoke(() => _window.IfConsoleClosedByUser());
 
     public bool HasExited => _consoleProcess.HasExited;
     
@@ -30,7 +35,7 @@ public class Connector
         while (_clientStream.IsConnected)
         {
             var line = streamReader.ReadLine();
-            _window.Dispatcher.BeginInvoke(() => _window.StringsOutputBox.Items.Add(line ?? string.Empty));
+            _window.Dispatcher.Invoke(() => _window.StringsOutputBox.Items.Add(line ?? string.Empty));
         }
     }
     
@@ -48,7 +53,10 @@ public class Connector
     
     public void Stop()
     {
-        _consoleProcess.WaitForExit();
+        if (!_consoleProcess.HasExited)
+        {
+            _consoleProcess.WaitForExit();
+        }
         _clientStream.Close();
     }
 }
