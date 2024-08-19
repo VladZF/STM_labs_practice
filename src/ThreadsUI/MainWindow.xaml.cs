@@ -14,7 +14,7 @@ public partial class MainWindow : Window
     private int _threadsForStartCount;
     private int _delayForStart;
     private int _itemsPerIterationForStart;
-    private int _lastThreadNumber = 1;
+    private int LastThreadNumber => ActiveThreadsList.Items.Count - 1;
 
     public MainWindow()
     {
@@ -63,8 +63,7 @@ public partial class MainWindow : Window
         _connector.SendCommand($"Start {_threadsForStartCount} {_delayForStart} {_itemsPerIterationForStart}");
         for (var _ = 0; _ < _threadsForStartCount; _++)
         {
-            ActiveThreadsList.Items.Add($"Поток {_lastThreadNumber}");
-            _lastThreadNumber++;
+            ActiveThreadsList.Items.Add($"Поток {LastThreadNumber}");
         }
         StopButton.IsEnabled = true;
         StopAllButton.IsEnabled = true;
@@ -76,7 +75,6 @@ public partial class MainWindow : Window
         {
             _connector.SendCommand("Stop");
             ActiveThreadsList.Items.RemoveAt(ActiveThreadsList.Items.Count - 1);
-            _lastThreadNumber--;
             return;
         }
         CloseConsole();
