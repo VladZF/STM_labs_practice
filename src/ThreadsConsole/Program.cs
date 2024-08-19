@@ -12,7 +12,7 @@ class Program
         var threadController = new ThreadController(serverStream);
         Console.WriteLine("Connected");
         var command = string.Empty;
-        while (command != "Stop all")
+        while (true)
         {
             command = Console.ReadLine();
             if (string.IsNullOrEmpty(command))
@@ -31,12 +31,14 @@ class Program
             if (command == "Stop")
             {
                 threadController.RemoveLastReader();
+                continue;
             }
             if (command == "Stop all")
             {
+                threadController.StopAllReaders();
                 break;
             }
+            Console.WriteLine("Incorrect command");
         }
-        
     }
 }

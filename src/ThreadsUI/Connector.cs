@@ -21,6 +21,8 @@ public class Connector
         _consoleProcess.StartInfo.FileName = binName;
         _consoleProcess.Start();
     }
+
+    public bool HasExited => _consoleProcess.HasExited;
     
     private void StartReading()
     {
@@ -46,6 +48,7 @@ public class Connector
     
     public void Stop()
     {
+        _consoleProcess.WaitForExit();
         _clientStream.Close();
     }
 }

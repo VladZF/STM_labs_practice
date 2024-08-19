@@ -10,7 +10,7 @@ namespace ThreadsUI;
 public partial class MainWindow : Window
 {
     private Connector _connector;
-    private int _launchedThreadsCount;
+    private int LaunchedThreadsCount => ActiveThreadsList.Items.Count;
     private int _threadsForStartCount;
     private int _delayForStart;
     private int _itemsPerIterationForStart;
@@ -29,47 +29,70 @@ public partial class MainWindow : Window
         _connector.Start();
         ActiveThreadsList.Items.Add("Все потоки");
         ActiveThreadsList.Items.Add("Главный поток");
-        _launchedThreadsCount += 2;
+    }
+    
+    private void CloseConsole()
+    {
+        _connector.SendCommand("Stop all");
+        _connector.Stop();
+        ActiveThreadsList.Items.Clear();
+        StringsOutputBox.Items.Clear();
     }
 
     private void StartButton_Click(object sender, RoutedEventArgs e)
     {
         if (_threadsForStartCount == 0)
         {
+            MessageBox.Show("Потоков не запущено");
             return;
         }
-        if (_launchedThreadsCount == 0)
+        if (_delayForStart == 0)
+        {
+            MessageBox.Show("Задержка между выводами должна быть ненулевая");
+            return;
+        }
+        if (_itemsPerIterationForStart == 0)
+        {
+            MessageBox.Show("Количество выводимых строк за итерацию должно быть ненулевым");
+            return;
+        }
+        if (LaunchedThreadsCount == 0)
         {
             OpenConsole();
         }
         _connector.SendCommand($"Start {_threadsForStartCount} {_delayForStart} {_itemsPerIterationForStart}");
-        _launchedThreadsCount += _threadsForStartCount;
-        ActiveThreadsList.Items.Add($"Поток {_lastThreadNumber}");
-        _lastThreadNumber++;
+        for (var _ = 0; _ < _threadsForStartCount; _++)
+        {
+            ActiveThreadsList.Items.Add($"Поток {_lastThreadNumber}");
+            _lastThreadNumber++;
+        }
         StopButton.IsEnabled = true;
         StopAllButton.IsEnabled = true;
     }
 
     private void StopButton_Click(object sender, RoutedEventArgs e)
     {
-        if (_launchedThreadsCount > 0)
+        if (LaunchedThreadsCount > 2)
         {
-            _launchedThreadsCount--;
+            _connector.SendCommand("Stop");
+            ActiveThreadsList.Items.RemoveAt(ActiveThreadsList.Items.Count - 1);
+            _lastThreadNumber--;
+            return;
         }
-        if (_launchedThreadsCount == 0) 
-        {
-            MessageBox.Show("Все потоки остановлены");
-            StopButton.IsEnabled = false;
-            StopAllButton.IsEnabled = false;
-        }
+        CloseConsole();
+        MessageBox.Show("Все потоки остановлены");
+        StopButton.IsEnabled = false;
+        StopAllButton.IsEnabled = false;
     }
 
     private void StopAllButton_Click(object sender, RoutedEventArgs e)
     {
-        _launchedThreadsCount = 0;
+        _connector.SendCommand("Stop all");
+        CloseConsole();
         MessageBox.Show("Все потоки остановлены");
         StopButton.IsEnabled = false;
         StopAllButton.IsEnabled = false;
+        StringsOutputBox.Items.Clear();
     }
 
     private void ThreadCount_TextChanged(object sender, TextChangedEventArgs e)
@@ -77,7 +100,6 @@ public partial class MainWindow : Window
         var textBox = (TextBox)sender;
         if (textBox.Text == "")
         {
-            _launchedThreadsCount = 0;
             return;
         }
         try
@@ -101,7 +123,6 @@ public partial class MainWindow : Window
         var textBox = (TextBox)sender;
         if (textBox.Text == "")
         {
-            _launchedThreadsCount = 0;
             return;
         }
         try
@@ -125,7 +146,6 @@ public partial class MainWindow : Window
         var textBox = (TextBox)sender;
         if (textBox.Text == "")
         {
-            _launchedThreadsCount = 0;
             return;
         }
         try
@@ -152,5 +172,13 @@ public partial class MainWindow : Window
     private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
 
+    }
+
+    private void MainForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+    {
+        if (_connector is { HasExited: false })
+        {
+            CloseConsole();
+        }
     }
 }
